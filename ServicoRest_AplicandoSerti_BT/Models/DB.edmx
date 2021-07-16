@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Biblioteca_BabelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Localizacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estante" Type="int" Nullable="false" />
+          <Property Name="Sala" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Librero" Type="int" Nullable="false" />
+          <Property Name="Posicion" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Volumenes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="No_Volumen" Type="int" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="Id_Localizacion" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Volumenes__Id_Lo__2D27B809">
+          <End Role="Localizacion" Type="Self.Localizacion" Multiplicity="1" />
+          <End Role="Volumenes" Type="Self.Volumenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Localizacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Volumenes">
+              <PropertyRef Name="Id_Localizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Biblioteca_BabelModelStoreContainer">
+          <EntitySet Name="Localizacion" EntityType="Self.Localizacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Volumenes" EntityType="Self.Volumenes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Volumenes__Id_Lo__2D27B809" Association="Self.FK__Volumenes__Id_Lo__2D27B809">
+            <End Role="Localizacion" EntitySet="Localizacion" />
+            <End Role="Volumenes" EntitySet="Volumenes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Biblioteca_BabelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Localizacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estante" Type="Int32" Nullable="false" />
+          <Property Name="Sala" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Librero" Type="Int32" Nullable="false" />
+          <Property Name="Posicion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Volumenes" Relationship="Self.FK__Volumenes__Id_Lo__2D27B809" FromRole="Localizacion" ToRole="Volumenes" />
+        </EntityType>
+        <EntityType Name="Volumenes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="No_Volumen" Type="Int32" Nullable="false" />
+          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="Id_Localizacion" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Localizacion" Relationship="Self.FK__Volumenes__Id_Lo__2D27B809" FromRole="Volumenes" ToRole="Localizacion" />
+        </EntityType>
+        <Association Name="FK__Volumenes__Id_Lo__2D27B809">
+          <End Role="Localizacion" Type="Self.Localizacion" Multiplicity="1" />
+          <End Role="Volumenes" Type="Self.Volumenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Localizacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Volumenes">
+              <PropertyRef Name="Id_Localizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Biblioteca_BabelEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Localizacion" EntityType="Self.Localizacion" />
+          <EntitySet Name="Volumenes" EntityType="Self.Volumenes" />
+          <AssociationSet Name="FK__Volumenes__Id_Lo__2D27B809" Association="Self.FK__Volumenes__Id_Lo__2D27B809">
+            <End Role="Localizacion" EntitySet="Localizacion" />
+            <End Role="Volumenes" EntitySet="Volumenes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Biblioteca_BabelModelStoreContainer" CdmEntityContainer="Biblioteca_BabelEntities1">
+          <EntitySetMapping Name="Localizacion">
+            <EntityTypeMapping TypeName="Biblioteca_BabelModel.Localizacion">
+              <MappingFragment StoreEntitySet="Localizacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Estante" ColumnName="Estante" />
+                <ScalarProperty Name="Sala" ColumnName="Sala" />
+                <ScalarProperty Name="Librero" ColumnName="Librero" />
+                <ScalarProperty Name="Posicion" ColumnName="Posicion" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Volumenes">
+            <EntityTypeMapping TypeName="Biblioteca_BabelModel.Volumenes">
+              <MappingFragment StoreEntitySet="Volumenes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="No_Volumen" ColumnName="No_Volumen" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Id_Localizacion" ColumnName="Id_Localizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
