@@ -34,6 +34,42 @@ namespace ServicoRest_AplicandoSerti_BT.Controllers
             return r;
         }
 
+        [HttpGet]
+        public Response Get(int Id)
+        {
+            Response r = new Response();
+            r.resultado = 0;
+
+            try
+            {
+                using (Biblioteca_BabelEntities1 db = new Biblioteca_BabelEntities1())
+                {
+                    List<VolumenesModel> volumen = (from v in db.Volumenes
+                                                          where v.IsActive == 1 && v.Id == Id
+                                                          select new VolumenesModel
+                                                          {
+                                                              Id = v.Id,
+                                                              No_Volumen = v.No_Volumen,
+                                                              Titulo = v.Titulo,
+                                                              IsActive = v.IsActive,
+                                                              Id_Localizacion = v.Id_Localizacion,
+                                                              Ubicado_En = "Sala: " + v.Localizacion.Sala +
+                                                                         " en el estante: " + v.Localizacion.Estante +
+                                                                         " en el librero: " + v.Localizacion.Librero +
+                                                                         " con posición: " + v.Localizacion.Posicion
+                                                          }).ToList();
+                    r.data = volumen;
+                    r.resultado = 1;
+                    r.mensaje = "OK";
+                }
+            }
+            catch (Exception)
+            {
+                r.mensaje = "Error en el servidor, intentar más tarde";
+            }
+            return r;
+        }
+
         [HttpPost]
         public Response Add([FromBody] VolumenesModel model)
         {
@@ -180,7 +216,11 @@ namespace ServicoRest_AplicandoSerti_BT.Controllers
                                                             No_Volumen = v.No_Volumen,
                                                             Titulo = v.Titulo,
                                                             IsActive = v.IsActive,
-                                                            Id_Localizacion = v.Id_Localizacion
+                                                            Id_Localizacion = v.Id_Localizacion,
+                                                            Ubicado_En = "Sala: " + v.Localizacion.Sala +
+                                                                         " en el estante: " + v.Localizacion.Estante +
+                                                                         " en el librero: " + v.Localizacion.Librero +
+                                                                         " con posición: " + v.Localizacion.Posicion
                                                         }).ToList();
 
             return volumenes;
